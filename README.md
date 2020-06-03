@@ -1,51 +1,49 @@
-A HTML/Javascript that will place a marker on a streamers timeline on web page load or refresh if the streamer is live at the time. Requires you to create an app thru https://dev.twitch.tv/login to generate a Client-ID and Generate a Oath token. I recommend this token generator https://twitchapps.com/tokengen/ (Required scope: user:edit:broadcast) as it is easier than setting up your own local host server and code to generate one with twitch. You will also need your twitch User id which is a number, and is different from your User name. Once you have Client-ID, Oath token, and user_id number. Fill them into the javascript in the appropriate places. The code has notes that tells you where. 
+# What is this?
+This is a simple web page that can be saved locally to your computer, that when configured correctly and used as an OBS source, allows you to use an OBS hotkey to trigger a twitch timeline marker to be created in your stream.
 
-OBS SETUP FOR HOTKEYS
-This will funtion much like a NOT Gate. I will assume you do not know the function of a NOT Gate, also known as an inverter. When the input of a Not gate is in a high state/ on state the output is in a Low / off state. 
+# How do I set it up
 
-In OBS Create a scene and call it Marker_
+## Setting up the marker maker app.
+1. Create a new app as a developer on https://dev.twitch.tv/login .
+2. Either set up an O-Auth token generator yourself (difficult), or use this one recommended by me: https://twitchapps.com/tokengen/ (Required scope: user:edit:broadcast)
+3. Get your twitch User Id
+4. Edit the javascript file included, filling in your Client-ID, O-Auth Token and User ID.
 
-In Marker_, Create a browser source called Marker0
+## OBS Hotkey & Scene Setup
+1. In OBS Create a scene and call it Marker_
+2. In Marker_, Create a browser source called Marker1
 	Check "Local file" Select "Marker.HTML" 
 	Set the file path to the script
 	Check "Shutdown source when not visiable"
 	Cech "Refresh browser when scene becomes active"
-Click ok
+        Click ok
 
-In Marker_, Create a browser source called Marker1
+3. In Marker_, Create a browser source called Marker2
 	Check "Local file" Select "Marker.HTML" 
 	Set the file path to the script
 	Check "Shutdown source when not visiable"
-	Cech "Refresh browser when scene becomes active"
-Click ok
+	Check "Refresh browser when scene becomes active"
+        Click ok
 
-In Marker_, Create a Color Source.
-	Click "Select color"
-	Select Black or put HTML: #000000
-	Select ok
-	Set the width and height to cover the entire screen.
-	Select ok
+4. Use the eye icon to hide Marker0
+5. Place the Marker_ scene on every scene that you want the hotkey to be active on, e.g. all of them.
+6. Click on Controls go to settings
+7. Click on Hotkeys
+8. Scoll to Marker0 and Marker1 in the list
+9. Set the hotkey for Marker0 and Marker1 (show and hide) to be the same hotkey.
+10. Click apply
+11. Click ok
 
-Arrange the order of sources as to be like this:
+# How it works
 
-			Color Source
-			Marker0
-			Marker1
+Creating a twitch developer app, and using this script, every time the marker maker html file is opened, it will send a command to the Twitch API to create a new Marker using the user_ID and O-Auth credentials that you input into the file.
 
-Mute or unsee Marker0
-Click on Contols go to settings
-Click on Hotkeys
-Scoll to Marker0 and Marker1 in the list
-Set the hotkey for Marker0 and Marker1 (show and hide) to be the same hotkey.
-Click apply
-Click ok
-I recommend the Page Down/Page up key, as I do not know of any conflicts with any game that would cause problems. It is also the same buttons found on the DinoFire Presentation Clicker ring. Usefull for VR applications and will not interfere with contollers. I.E. Index/Knuckles controlers.
+By setting up the sources and scene, you are using OBS to force-load the app every time the source is hidden or unhidden. The reason why we add the source twice, and hide one, is so that one source is always hidden, waiting to be shown, so it can be force-loaded when it shows. If you only set up 1 source, you will need to press the button twice every time to be sure.
 
-Now when you push your chosen hotkey Marker0 will go visable and Marker1 will go invisable just like the function of a Not Gate/inverter, and sending your marker requests to twitch every time you press your chosen hot key. Add Scene Marker_ to any scene that you will be live with.
+You can use any key that is readily available, but I recommend using the Page Down / Page Up key, as it's unused in most of the games I play, and is the button that cheap powerpoint presentation remotes use, such as the DinoFire Presentation Clicker Ring.
+Useful for VR applications and will not interfere with contollers. I.E. Index/Knuckles controlers.
 
-As a side note the black color source on top is a security feature. I don't know what will happen when the oath token expires, or if the code breaks. To keep your credentials safe and hidden... I recommend keeping the black color source on top and all three sources, and locked.
-
-Special thanks to the Twitch dev discord esp @Dist @BarryCarlyon @Marenthyu @foodz who helped me learn how to do this. A special special thanks to @BarryCarlyon who helped me set up the code, and was very patient with me.
+Special thanks to the Twitch dev discord especially @Dist @BarryCarlyon @Marenthyu @foodz who helped me learn how to do this. A special special thanks to @BarryCarlyon who helped me set up the code, and was very patient with me.
 
 Have fun, and be creative.
 -Elocin Anagram
