@@ -1,19 +1,26 @@
 <HTML>
 
 <body>
-<! ––  Fill in the following: Line 11 your Client-ID. Line 12 Oath token. Line 16 user_id. Will create a stream marker on twitch on load of page if steamer is live. Special thanks to the Twitch dev discord esp @Dist @BarryCarlyon @Marenthyu @foodz who helped me learn how to do this. A special special thanks to @BarryCarlyon who helped me set up the code, and was very patient with me.
+<! ––  Fill in the following: Line 10 your Client-ID. Line 11 Oath token. Line 12 user_id. Will create a stream marker on twitch on load of page if steamer is live. Special thanks to the Twitch dev discord esp @Dist @BarryCarlyon @Marenthyu @foodz who helped me learn how to do this. A special special thanks to @BarryCarlyon who helped me set up the code, and was very patient with me.
 ––> 
 
 <script>
+    // Replace the XXX with your values below, leaving the quotes. and the ; at the end of the line.
+    // Example var User_ID = '12456790'    ;
+    var Client_ID   =  'XXX'   ;
+    var OAuth_Token =  'XXX'   ;
+    var User_ID     =  'XXX'   ;
+    
+    // Do not modify past this point.
 fetch('https://api.twitch.tv/helix/streams/markers', {
     method: 'POST',
     headers: {
-        'Client-ID': 'Client-ID',
-        'Authorization': 'Bearer Oath token',
+        'Client-ID': Client_ID,
+        'Authorization': OAuth_Token,
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-        user_id: 'user_id'
+        user_id: User_ID
     })
 })
 .then(resp => { return resp.json(); })
